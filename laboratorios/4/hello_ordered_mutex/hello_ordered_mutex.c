@@ -12,7 +12,6 @@ typedef struct {
 typedef struct {
     size_t thread_num;
     shared_message_t* shared_message;
-
 } thread_data_t;
 
 
@@ -21,23 +20,23 @@ void* helloWorld(void* args) {
 
     size_t thread_num = data->thread_num;
     shared_message_t* shared_message = data->shared_message;
-    pthread_mutex_t mutex_position = shared_message->mutexes[thread_num];
-
-    //while (thread_num != shared_message->next_thread);
-
-    /*if (thread_num == shared_message->chose_thread) {
-        shared_message->message = 2021;
-    }*/
 
 	//Hacer lock. Manda a todos los threads a dormir
-	//pthread_mutex_lock(&(shared_message->mutexes[thread_num]));
+	pthread_mutex_lock(&shared_message->mutexes[thread_num]);
+	
+	if (thread_num == shared_message->chose_thread) {
+        shared_message->message = 2021;
+    }
 
     printf("Hello world from thread number # %zu. The message is: %zu\n", thread_num, shared_message->message);
- 
+	
     ++shared_message->next_thread;
-    //Hacer unlock
-    //pthread_mutex_unlock(&shared_message->mutexes[thread_num]);
-    //pthread_mutex_unlock(&shared_message->mutexes[shared_message->next_thread]);
+    //Unlock al siguiente thread
+    pthread_mutex_unlock(&shared_message->mutexes[shared_message->next_thread]);
+    
+    //Hacer unlock a este thread
+    pthread_mutex_unlock(&shared_message->mutexes[thread_num]);
+    pthread_mutex_destroy(&shared_message->mutexes[thread_num]);
     return NULL;
 }
 
@@ -68,9 +67,10 @@ int main(int argc, char* arg[]) {
     shared_message->chose_thread = chosen_thread;
     shared_message->next_thread = 0;
     
-    //Declaro lista de mutexes
-    pthread_mutex_t* mutexes = malloc((size_t)(thread_count * sizeof(pthread_mutex_t)));
-    
+    //Declaro lista de mutexes y la meto en Share_message
+    //pthread_mutex_t* mutexes = callocalloc((size_t)(thread_count * sizeof(pthread_mutex_t)));
+    pthread_mutex_t* mutexes = (pthread_mutex_t*)calloc(thread_count, sizeof(pthread_mutex_t));
+    shared_message->mutexes = mutexes;
 
     thread_data_t* thread_data_list = malloc((size_t)(thread_count * sizeof(thread_data_t)));
 
@@ -94,8 +94,9 @@ int main(int argc, char* arg[]) {
     printf("Hello world from main thread\n");
 
     free(threads);
+    free(shared_message->mutexes);
     free(shared_message);
-    free(thread_data_list);
+    //free(thread_data_list);
 
     return 0;
 }
