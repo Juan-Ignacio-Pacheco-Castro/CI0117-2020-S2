@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <semaphore.h>
+#include <time.h>
+#include <math.h>
 
 typedef struct {
     size_t message;
@@ -43,6 +45,10 @@ void* helloWorld(void* args) {
 
 
 int main(int argc, char* arg[]) {
+	//Inicia medicion del tiempo
+	clock_t start, stop;
+	double total;
+	start = clock();
 
     size_t thread_count = 0;
     size_t chosen_thread = 0;
@@ -99,6 +105,9 @@ int main(int argc, char* arg[]) {
     free(shared_message);
     //free(thread_data_list);
 
+	stop = clock();
+	total = ((double)(stop-start))/CLOCKS_PER_SEC;
+	printf("Tiempo total de ejecucion: %lf s\n", total);
     return 0;
 }
 
