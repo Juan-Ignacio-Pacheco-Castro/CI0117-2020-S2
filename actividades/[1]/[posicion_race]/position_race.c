@@ -42,7 +42,7 @@ int main(int argc, char* arg[]) {
 
     pthread_t* threads = malloc((size_t)(thread_count * sizeof(pthread_t)));
 
-    shared_data_t* shared_data = (shared_message_t*)calloc(1, sizeof(shared_data_t));
+    shared_data_t* shared_data = (shared_data_t*)calloc(1, sizeof(shared_data_t));
 
     shared_data->position = 0;
 
@@ -60,7 +60,7 @@ int main(int argc, char* arg[]) {
     }
 
     free(threads);
-    free(shared_message);
+    free(shared_data);
     free(thread_data_list);
 
     return 0;
