@@ -4,6 +4,7 @@
 
 typedef struct {
     size_t position;
+    pthread_mutex_t mutex;
 } shared_data_t;
 
 typedef struct {
@@ -22,10 +23,14 @@ void* helloWorld(void* args) {
     size_t thread_total = data->thread_total;
     shared_data_t* shared_data = data->shared_data;
 
+	//while (thread_num != shared_message->next_thread);
+	pthread_mutex_lock(&shared_data->mutex);
+
     printf("Thread %zu / %zu : I arrive at position %zu\n", thread_num, thread_total, shared_data->position);
 
     ++shared_data->position;
 
+	pthread_mutex_unlock(&shared_data->mutex);
     return NULL;
 }
 
@@ -45,6 +50,7 @@ int main(int argc, char* arg[]) {
     shared_data_t* shared_data = (shared_data_t*)calloc(1, sizeof(shared_data_t));
 
     shared_data->position = 0;
+	pthread_mutex_init(&shared_data->mutex , /*attr*/ NULL);
 
     thread_data_t* thread_data_list = malloc((size_t)(thread_count * sizeof(thread_data_t)));
 
@@ -59,6 +65,7 @@ int main(int argc, char* arg[]) {
         pthread_join(threads[i], NULL);
     }
 
+	pthread_mutex_destroy(&shared_data->mutex);
     free(threads);
     free(shared_data);
     free(thread_data_list);
