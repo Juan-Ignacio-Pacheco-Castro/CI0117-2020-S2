@@ -65,5 +65,3 @@ int main(int argc, char* arg[]) {
 
     return 0;
 }
-
-//Implementar carrera de threads
