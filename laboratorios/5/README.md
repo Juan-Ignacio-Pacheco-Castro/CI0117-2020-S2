@@ -1,7 +1,9 @@
-Cabe destacar que el numero de rectangulos tiene 
-Los limites que se usaron para hacer la prueba fueron 1 a 10, a = 1 y b = 10.
+# Laboratorio 5 Solución
 
-Ejecutamos los programas de ambos ejercicios para n = 1, n = 10,n = 1,000 y n = 1,000,000 utilizando los mismos valores de a y b en cada ejecución. Para el caso del programa que utiliza pthreads, se realizo las ejecuciones usando 1, 16, 32 y 64 hilos. A continuacion se muestra la duración de cada ejecución y nos aseguramos de obtener las mismas áreas estimadas por la versión serial y concurrente. 
+Cabe destacar que el número de rectángulos tiene
+Los límites que se usaron para hacer la prueba fueron 1 a 10, a = 1 y b = 10.
+
+Ejecutamos los programas de ambos ejercicios para n = 1, n = 10,n = 1,000 y n = 1,000,000 utilizando los mismos valores de a y b en cada ejecución. Para el caso del programa que utiliza pthreads, se realizó las ejecuciones usando 1, 16, 32 y 64 hilos. A continuación se muestra la duración de cada ejecución y nos aseguramos de obtener las mismas áreas estimadas por la versión serial y concurrente.
 
 | n | area | serial | 1 | 16 | 32 | 64 |
 |:------------:|-----------|-----------|-----------|-----------|-----------|-----------|
