@@ -1,7 +1,7 @@
 # Laboratorio 5
 ## Equipo de Desarrollo
-David Xie (B88682)
-Juan Ignacio Pacheco (B85841)
+- David Xie (B88682)
+- Juan Ignacio Pacheco (B85841)
 
 ## Datos
 Cabe destacar que el numero de rectangulos tiene 
