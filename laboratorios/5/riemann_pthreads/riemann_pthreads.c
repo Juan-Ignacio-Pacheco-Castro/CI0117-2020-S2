@@ -7,8 +7,8 @@
 typedef struct timespec walltime_t;
 
 typedef struct {
-    size_t rectangle_total; //Talvez ir restando al rectangle total...
-    double b_global;
+    size_t rectangle_total;
+    double global_b;
     double delta;
     double shared_area;
     pthread_rwlock_t mutex;
@@ -39,12 +39,13 @@ void* calculate_area(void* argument){
     shared_data_t* shared_data = thread_data->shared_data;
 
     double height = 0.0, my_area = 0.0;
-    for(double rectangle = thread_data->a; rectangle < thread_data->b && rectangle < shared_data->b_global; rectangle += shared_data->delta){
+
+    //pthread_rwlock_rdlock(&shared_data->mutex);
+    for(double rectangle = thread_data->a; rectangle < thread_data->b /*&& rectangle < shared_data->global_b*/; rectangle += shared_data->delta){
         height = pow(rectangle, 2) + 1;
-        pthread_rwlock_rdlock(&shared_data->mutex);
         my_area += shared_data->delta * height;
-        pthread_rwlock_unlock(&shared_data->mutex);
     }
+    //pthread_rwlock_unlock(&shared_data->mutex);
 
     pthread_rwlock_wrlock(&shared_data->mutex);
     shared_data->shared_area += my_area;
@@ -59,7 +60,6 @@ void* calculate_area(void* argument){
  */
 int calculate_riemann_aprox(const size_t a, const size_t b, const size_t n, const size_t workers){
     walltime_t* walltime = (walltime_t*)calloc(1, sizeof (walltime_t));
-    walltime_start(walltime);
 
     double delta = (b - a)/(double)n;           // 0.5
     size_t iterations = ceil(n/(double)workers);      // rectangles for each thread, // 4/8 = 1/2 = 0.5 = 1
@@ -81,15 +81,21 @@ int calculate_riemann_aprox(const size_t a, const size_t b, const size_t n, cons
     shared_data->delta = delta;
     shared_data->shared_area = 0.0;
     shared_data->rectangle_total = n;
-    shared_data->b_global = b;
+    shared_data->global_b = b;
+
     double under = a;
 
-    for (size_t thread = 0; thread < workers; ++thread){
+	walltime_start(walltime);
+
+    int finish = 0;
+    for (size_t thread = 0; thread < workers && !finish; ++thread){
         private_data[thread].shared_data = shared_data;
         private_data[thread].a = under;
         private_data[thread].b = under + iterations*delta;
         pthread_create(&threads[thread], NULL, calculate_area, (void*)&private_data[thread]);
         under += iterations*delta;
+        if(private_data[thread].b == shared_data->global_b)
+            finish = 1;
     }
 
     for (size_t thread = 0; thread < workers; ++thread)
@@ -123,7 +129,7 @@ int main(int argc, char* arg[]){
         return fprintf(stderr, "Error, invalid number of parameters\n"), 1;
 
     //if(n % workers)
-    //    return fprintf(stderr, "Rectangle count must be divisible by workers threads\n"), 5;
+      //  return fprintf(stderr, "Rectangle count must be divisible by workers threads\n"), 5;
 
     return calculate_riemann_aprox(a, b, n, workers); // 3, workers
 
