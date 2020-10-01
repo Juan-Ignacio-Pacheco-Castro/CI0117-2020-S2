@@ -1,3 +1,9 @@
+# Laboratorio 5
+## Equipo de Desarrollo
+David Xie (B88682)
+Juan Ignacio Pacheco (B85841)
+
+## Datos
 Cabe destacar que el numero de rectangulos tiene 
 Los limites que se usaron para hacer la prueba fueron 1 a 10, a = 1 y b = 10.
 
