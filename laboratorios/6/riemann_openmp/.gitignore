@@ -1,0 +1,5 @@
+riemann_openmp
+*.pro
+*.o
+bin/*
+build/*
