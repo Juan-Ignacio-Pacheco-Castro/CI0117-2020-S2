@@ -1,7 +1,12 @@
-Cabe destacar que el numero de rectangulos tiene 
-Los limites que se usaron para hacer la prueba fueron 1 a 10, a = 1 y b = 10.
+# Laboratorio 6
+## Equipo de Desarrollo
+- David Xie (B88682)
+- Juan Ignacio Pacheco (B85841)
 
-Ejecutamos los programas de ambos ejercicios para n = 1, n = 10,n = 1,000, n = 1,000,000, n = 100,000,000 y n = 1,000,000,000  utilizando los mismos valores de a y b en cada ejecución. Se realizo las ejecuciones usando 1, 16, 32, 64 y 128 hilos en openmp. A continuacion se muestra la duración de cada ejecución y nos aseguramos de obtener las mismas áreas estimadas por la versión serial y concurrente. 
+## Datos
+Los límites que se usaron para hacer la prueba fueron a y b con a = 1 y b = 10.
+
+Ejecutamos los programas de ambos ejercicios para n = 1, n = 10, n = 1.000, n = 1.000.000, n = 100.000.000 y n = 1.000.000.000 rectángulos utilizando los mismos valores de a y b en cada ejecución. Se realizó las ejecuciones usando 1, 16, 32, 64 y 128 hilos. A continuación se muestra la duración de cada ejecución y nos aseguramos de obtener las mismas áreas estimadas por la versión serial y concurrente del laboratorio 5. 
 
 | n | area | 1 | 16 | 32 | 64 | 128 |
 |:------------:|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
