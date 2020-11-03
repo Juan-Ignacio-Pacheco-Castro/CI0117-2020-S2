@@ -9,3 +9,7 @@ The type omp_lock_t represents a simple lock:
 4. void omp\_set\_lock(omp\_lock\_t *lock) ; lock
 5. void omp\_unset\_lock(omp\_lock\_t *lock) ; unlock
 6. int omp\_test\_lock(omp\_lock\_t *lock) ; tests a simple lock and sets if it is available
+
+## Equipo de Desarrollo
+- David Xie (B88682)
+- Juan Ignacio Pacheco (B85841)
