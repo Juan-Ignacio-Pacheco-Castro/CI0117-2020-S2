@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
 
     int my_id, num_processes;
-
+    srand(time(NULL));
     MPI_Init(&argc, &argv);
 
     MPI_Status status;
@@ -19,12 +19,12 @@ int main(int argc, char *argv[]) {
     if(!my_id){
         while (total_processes){
             total_processes--;
-            MPI_Recv(&message_sent, 1 /* count*/, MPI_INT, MPI_ANY_SOURCE /*source*/, 123 /*message id*/, MPI_COMM_WORLD, &status);
-            cout << "Process: " << message_sent << " finished. Total processes: " << num_processes << endl;
+            MPI_Recv(&message_sent, 1 /* count*/, MPI_INT, MPI_ANY_SOURCE /*source*/, MPI_ANY_TAG /*message id*/, MPI_COMM_WORLD, &status);
+            cout << "Process: " << status.MPI_SOURCE << " finished. Tag accessed: " << status.MPI_TAG << " Total processes: " << num_processes << endl;
         }
     } else {
-        message_sent = my_id;
-        MPI_Send(&message_sent, 1 /*count*/, MPI_INT, 0 /*dest*/, 123 /*message id*/, MPI_COMM_WORLD);
+        //message_sent = my_id;
+        MPI_Send(&message_sent, 1 /*count*/, MPI_INT, 0 /*dest*/, rand() % 100/*message id*/, MPI_COMM_WORLD);
     }
 
     MPI_Finalize();
