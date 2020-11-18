@@ -1,3 +1,5 @@
 *.pro
 *.pro.user
-
+count_primes_reduction
+count_primes_all_reduce
+count_primes_process
