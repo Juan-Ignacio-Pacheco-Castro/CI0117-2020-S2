@@ -6,8 +6,8 @@
 ## Datos
 Las pruebas se hicieron con el límite de 10 millones, en donde se calculó la cantidad de primos entre 2 y este límite.
 Para calcular el tiempo que se tardó en correr el programa para todas las pruebas, para un número grande de n, en este caso 100 millones, se utilizó MPI_Wtime.
-A continuación, se muestra la tabla con las duraciones en segundos que se tardó en ejecutar cada caso para n = 100 000 000.
-5761455
+A continuación, se muestra la tabla con las duraciones en segundos que se tardó en ejecutar cada caso para n = 100 000 000. El resultado de siendo 
+que se encontraron 5761455 primos.
 
 | numero de procesos | count\_primes\_process | count\_primes\_reduction | count\_primes\_all\_reduce |
 |:------------:|-----------|-----------|-----------|
