@@ -2,7 +2,7 @@
 # ----------------------------------------------------------------------------
 
 *.pro
-hello_mpi_race
+random_number_allreduce
 *~
 *.autosave
 *.a
