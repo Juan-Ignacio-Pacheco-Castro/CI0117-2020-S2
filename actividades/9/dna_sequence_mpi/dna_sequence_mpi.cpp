@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 
     int segmentSize = 0;
 
+
     if (argc < 2)
     {
         cout << "Invalid number of params." << endl;
@@ -64,10 +65,10 @@ int main(int argc, char *argv[])
 
     //MPI_Scatter(&sequence, sequence.length()/numProcesses, MPI_CHAR, &sequenceProcess, sequence.length()/numProcesses, MPI_CHAR, 0, MPI_COMM_WORLD);
     MPI_Bcast(&segmentSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    char sequenceBuffer[segmentSize];
-    MPI_Scatter(sequence.c_str(), segmentSize, MPI_CHAR, &sequenceBuffer, segmentSize, MPI_CHAR, 0, MPI_COMM_WORLD);
+    char* sequenceBuffer = new char[segmentSize + 1];
+    MPI_Scatter(sequence.c_str(), segmentSize, MPI_CHAR, sequenceBuffer, segmentSize, MPI_CHAR, 0, MPI_COMM_WORLD);
 
-    //std::cout << sequenceBuffer[0] << std::endl;
+    //std::cout << "Segment size = " << segmentSize << std::endl;
 
     int index;
     for (int i = 0; i < segmentSize; ++i)
@@ -114,6 +115,7 @@ int main(int argc, char *argv[])
         }
         cout << endl;
     }
+    delete sequenceBuffer;
 
     MPI_Finalize();
 
