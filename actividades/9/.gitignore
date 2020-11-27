@@ -3,6 +3,7 @@
 
 *.pro
 dna_sequence_mpi
+comprobacion
 *~
 *.autosave
 *.a
